@@ -1,0 +1,56 @@
+{
+  "name": "boostrtruffle",
+  "version": "1.0.0",
+  "description": "Truffle version of Boostr dApp",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+		"test": "mocha",
+		"dev": "NODE_ENV=dev node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lesansley/boostr.git"
+  },
+  "keywords": [
+    "truffle",
+    "blockchain",
+    "smart",
+    "contract"
+  ],
+  "author": "Les Ansley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lesansley/boostr/issues"
+  },
+  "homepage": "https://github.com/lesansley/boostr#readme",
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.4.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "ganache-cli": "^6.1.8",
+    "mocha": "^5.2.0",
+    "prettier": "^1.14.2"
+  },
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "fs-extra": "^7.0.0",
+    "jsonfile": "^4.0.0",
+    "next": "^6.1.1",
+    "next-routes": "^1.4.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-react": "^0.82.3",
+    "solc": "^0.4.24",
+    "truffle-hdwallet-provider": "0.0.6",
+    "web3": "^1.0.0-beta.35"
+  }
+}
