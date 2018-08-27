@@ -3,10 +3,13 @@ This app allows you to create and fund projects (called Boostrs). Creators of pr
 
 ## Details
 ### Design
-This project uses a factory design pattern (https://ethereumdev.io/manage-several-contracts-with-factories/). 
+This project uses a factory design pattern (https://ethereumdev.io/manage-several-contracts-with-factories/).
 
 ### Security
-In order to prevent re-entry attacks 
+- Restricting access - Modifiers are used to restrict function access so that only specific addresses are permitted to execute functions
+- A withdraw pattern is adopted to prevent re-entrancy and denial of service attacks
+- An emergency circuit breaker has been included that prevents new Boostrs being created or contributions to exisiting Boostrs being made.
+- Boostr contract uses `.transfer` instead of `.send`
 
 ## boostrFactory setup
 1. Copy or clone the Boostr respository to your local machine
@@ -81,15 +84,19 @@ npm run dev
 - Click __Finalise__
 - Click __Confirm__ in MetaMask to approve the transaction
 
-## boostrTruffle setup
+## boostrTruffle migration
 ```bash
 cd boostrTruffle
-ganache-cli
+cp ../boostrFactory/.env ./
 truffle compile
-truffle migrate –network rinkeby
+truffle migrate
 ```
-
-
+Boostr is deployed to the Rinkeby network
+Start your server
+```bash
+npm run dev
+```
+In your web browser navigate to localhost:3000
 
 ## Test
 ```bash
