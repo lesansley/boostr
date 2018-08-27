@@ -3,42 +3,40 @@ This app allows you to create and fund projects (called Boostrs). Creators of pr
 
 ## Factory setup
 1. Copy or clone the Boostr respository to your local machine
-2. `cd` into the root respository folder
+2. `cd` into the root folder of boostrFactory
 3. Install the npm modules
-4. `cd` into the factory folder
-5. Create a file named `.env`
+4. Create a file named `.env`
 ```bash
 git clone https://github.com/lesansley/boostr.git
-cd boostr
+cd boostr/boostrFactory
 npm install
-cd boostr/factory
 echo $'PORT=3000\nMNEMONIC=[YOUR_SEED_WORDS_HERE]\nINFURA_RINKEBY_ENDPOINT=https://rinkeby.infura.io/v3/[YOUR_API_KEY_HERE]' >.env
 ```
-6. Create an Infura account (https://infura.io/)
-7. Navigate to Dashboard (https://infura.io/dashboard)
-8. Copy your API KEY
-9. Paste the your key into the INFURA_RINKEBY_ENDPOINT variable that you created in `.env`
-10. Add the MetaMask browser extension (https://metamask.io/)
-11. Sign into MetaMask in your browser
-12. Select Rinkeby Test Network
-13. Add funds to your account (https://faucet.rinkeby.io/)
-14. Create more accounts
-15. Send ether to the newly created accounts
-16. Go into MetaMask settings
-17. Select __REVEAL SEED WORDS__ and enter your password
-18. Copy your seed words
-19. Paste your seeds words into the MNEMONIC variable that you created in `.env` (Do not enclose in quotes)
-20. Make sure you save the `.env` file
-21. Compile and deploy the contract
+5. Create an Infura account (https://infura.io/)
+6. Navigate to Dashboard (https://infura.io/dashboard)
+7. Copy your API KEY
+8. Paste the your key into the INFURA_RINKEBY_ENDPOINT variable that you created in `.env`
+9. Add the MetaMask browser extension (https://metamask.io/)
+10. Sign into MetaMask in your browser
+11. Select Rinkeby Test Network
+12. Add funds to your account (https://faucet.rinkeby.io/)
+13. Create more accounts
+14. Send ether to the newly created accounts
+15. Go into MetaMask settings
+16. Select __REVEAL SEED WORDS__ and enter your password
+17. Copy your seed words
+18. Paste your seeds words into the MNEMONIC variable that you created in `.env` (Do not enclose in quotes)
+19. Make sure you save the `.env` file
+20. Compile and deploy the contract
 ```bash
 npm run compile
 npm run deploy
 ```
-22. Start the server
+21. Start the server
 ```bash
 npm run dev
 ```
-23. In your web browser navigate to localhost:3000
+22. In your web browser navigate to localhost:3000
 
 ### Add a Boostr
 - Select a different account in MetaMask
