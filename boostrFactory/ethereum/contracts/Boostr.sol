@@ -149,11 +149,13 @@ contract Boostr {
         return supplierBalance[supplier];
     }
 
-    function supplierWithdraw() public supplierRestricted payable {
+    function supplierWithdraw() public supplierRestricted payable returns (bool success) {
+        require(supplierBalance[msg.sender] >= 0, "Insufficient funds");
         require(supplierBalance[msg.sender] >= msg.value, "Insufficient funds");
         uint remainingBal = supplierBalance[msg.sender];
         remainingBal = remainingBal - msg.value;
         supplierBalance[msg.sender] = remainingBal;
         msg.sender.transfer(msg.value);
+        return true;
     }
 }
