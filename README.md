@@ -97,4 +97,5 @@ cd boostrFactory
 npm run test
 ```
 Acknowledgements: 
-Stephen Grider - https://github.com/StephenGrider
+https://github.com/StephenGrider
+https://espeoblockchain.com/blog/smart-contracts-explained/
