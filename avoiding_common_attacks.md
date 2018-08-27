@@ -3,3 +3,4 @@
 - A withdraw pattern is adopted to prevent re-entrancy and denial of service attacks
 - An emergency circuit breaker has been included that prevents new Boostrs being created or contributions to exisiting Boostrs being made.
 - Boostr contract uses `.transfer` instead of `.send`
+- When a withdrawal is made the balance is adjusted prior to `.transfer` being executed
