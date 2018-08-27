@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, Dimmer, Grid, Icon, Loader } from 'semantic-ui-react';
+import { Button, Card, Dimmer, Grid, Loader } from 'semantic-ui-react';
 
 import web3 from '../../ethereum/web3';
 import boostr from '../../ethereum/boostr';
-import { Contribute, Layout } from '../../components';
+import { Contribute, Layout, Withdraw } from '../../components';
 import { Link } from '../../routes';
 
-const meta = address => {
-	const url = `https://rinkeby.etherscan.io/address/${address}`;
-	return (
-		<a href={url}>
-			<Icon name="user" />
-			{this.props.manager}
-		</a>
-	);
+const uiForm = {
+	padding: '15px'
 };
 
 class BoostrShow extends Component {
@@ -94,6 +88,7 @@ class BoostrShow extends Component {
 							</Grid.Column>
 							<Grid.Column width={4}>
 								<Contribute address={this.props.address} />
+								<Withdraw style={uiForm} address={this.props.address} />
 							</Grid.Column>
 						</Grid.Row>
 						<Grid.Row>

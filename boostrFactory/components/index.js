@@ -5,6 +5,7 @@ import CurrencyInput from './currency-input';
 import Header from './header';
 import Layout from './layout';
 import RequestRow from './request-row';
+import Withdraw from './withdraw';
 
 export {
 	BoostrList,
@@ -13,5 +14,6 @@ export {
 	CurrencyInput,
 	Header,
 	Layout,
-	RequestRow
+	RequestRow,
+	Withdraw
 };

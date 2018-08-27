@@ -15,17 +15,24 @@ contract Boostr {
     string public description;
     address private manager;
     uint public minimumContribution;
+    mapping(address=>uint) private supplierBalance;
+    mapping(address=>bool) private suppliers;
     mapping(address=>bool) private supporters;
     mapping(address=>bool) private approvers;
     uint public approversCount;
 
     modifier managerRestricted() {
-        require(msg.sender == manager);
+        require(msg.sender == manager, "Unauthorized access");
         _;
     }
     
     modifier approverRestricted() {
-        require(approvers[msg.sender]);
+        require(approvers[msg.sender], "Unauthorized access");
+        _;
+    }
+
+    modifier supplierRestricted() {
+        require(suppliers[msg.sender], "Unauthorized access");
         _;
     }
     
@@ -83,21 +90,34 @@ contract Boostr {
             approvalCount: 0
         });
         requests.push(newRequest);
+        suppliers[recipient] = true;
     }
     
     function approveRequest(uint index) public {
         Request storage request = requests[index];
-        require (approvers[msg.sender]);
-        require (!request.approval[msg.sender]);
+        require (approvers[msg.sender], "Unauthorized access");
+        require (!request.approval[msg.sender], "Unauthorized access");
         request.approval[msg.sender] = true;
         request.approvalCount++;
     }
     
     function finalizeRequest(uint index) public managerRestricted payable {
         Request storage request = requests[index];
-        require (!request.complete);
-        require (request.approvalCount > approversCount / 2);
+        require (!request.complete, "Request previously fulfilled");
+        require (request.approvalCount > approversCount / 2, "Insuffient support");
         request.complete = true;
-        request.recipient.transfer(request.value);
+        supplierBalance[request.recipient] += request.value;
+    }
+    
+    function getSupplierBalance(address supplier) public supplierRestricted view returns (uint balance) {
+        return supplierBalance[supplier];
+    }
+
+    function supplierWithdraw(uint withdrawAmount) public supplierRestricted payable {
+        require(supplierBalance[msg.sender] >= withdrawAmount, "Insufficient funds");
+        uint remainingBal = supplierBalance[msg.sender];
+        remainingBal = remainingBal - withdrawAmount;
+        supplierBalance[msg.sender] = remainingBal;
+        msg.sender.transfer(withdrawAmount);
     }
 }

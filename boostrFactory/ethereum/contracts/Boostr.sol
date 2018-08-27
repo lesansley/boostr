@@ -24,13 +24,26 @@ contract Boostr {
     }
 
     Request[] public requests;
+    bool public stopped = false;
     string public title;
     string public description;
     address private manager;
     uint public minimumContribution;
+    mapping(address=>uint) private supplierBalance;
+    mapping(address=>bool) private suppliers;
     mapping(address=>bool) private supporters;
     mapping(address=>bool) private approvers;
     uint public approversCount;
+
+    modifier stopInEmergency() {
+        require(!stopped, "A circuit breaker has been applied");
+        _;
+    }
+
+    modifier onlyInEmergency() {
+        require(stopped);
+        _;
+    }
 
     modifier managerRestricted() {
         require(msg.sender == manager, "Unauthorized access");
@@ -39,6 +52,11 @@ contract Boostr {
     
     modifier approverRestricted() {
         require(approvers[msg.sender], "Unauthorized access");
+        _;
+    }
+
+    modifier supplierRestricted() {
+        require(suppliers[msg.sender], "Unauthorized access");
         _;
     }
     
@@ -61,7 +79,19 @@ contract Boostr {
         return supporters[addr];
     }
 
-    function contribute() public payable {
+    function getSuppliers(address addr) public view returns (bool) {
+        return suppliers[addr];
+    }
+
+    function applyBrake() public managerRestricted payable {
+        stopped = true;
+    }
+
+    function releaseBrake() public managerRestricted payable {
+        stopped = false;
+    }
+
+    function contribute() public stopInEmergency payable {
         if (msg.value > 0) {
             supporters[msg.sender] = true;
             if (msg.value > minimumContribution) {
@@ -87,7 +117,7 @@ contract Boostr {
         return requests.length;
     }
     
-    function createRequest(string reqDescription, uint value, address recipient) public managerRestricted {
+    function createRequest(string reqDescription, uint value, address recipient) public stopInEmergency managerRestricted {
         Request memory newRequest = Request ({
             description: reqDescription,
             value: value,
@@ -96,6 +126,7 @@ contract Boostr {
             approvalCount: 0
         });
         requests.push(newRequest);
+        suppliers[recipient] = true;
     }
     
     function approveRequest(uint index) public {
@@ -106,11 +137,23 @@ contract Boostr {
         request.approvalCount++;
     }
     
-    function finalizeRequest(uint index) public managerRestricted payable {
+    function finalizeRequest(uint index) public managerRestricted {
         Request storage request = requests[index];
         require (!request.complete, "Request previously fulfilled");
         require (request.approvalCount > approversCount / 2, "Insuffient support");
         request.complete = true;
-        request.recipient.transfer(request.value);
+        supplierBalance[request.recipient] += request.value;
+    }
+    
+    function getSupplierBalance(address supplier) public supplierRestricted view returns (uint balance) {
+        return supplierBalance[supplier];
+    }
+
+    function supplierWithdraw() public supplierRestricted payable {
+        require(supplierBalance[msg.sender] >= msg.value, "Insufficient funds");
+        uint remainingBal = supplierBalance[msg.sender];
+        remainingBal = remainingBal - msg.value;
+        supplierBalance[msg.sender] = remainingBal;
+        msg.sender.transfer(msg.value);
     }
 }
