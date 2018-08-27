@@ -60,7 +60,7 @@ npm run dev
 - Click __Requests__
 - Click __New request__
 - Complete the form fields
-- In MetaMask select a new account and copy the address
+- In MetaMask select a new account for the supplier and copy the address
 - Paste the address into teh Recipient field
 - In MetaMask select the Boostr creator's account
 - Click on __Create__
@@ -83,6 +83,14 @@ npm run dev
 - In MetaMask select the Boostr creator's account
 - Click __Finalise__
 - Click __Confirm__ in MetaMask to approve the transaction
+
+### Withdraw ether as a supplier
+- In MetaMask select the supplier's account
+- Click __Boostrs__
+- Click __View boostr__
+- Enter the amount you wish to withdraw from teh contract in the _Withdraw from this boostr_ field
+- Click __Withdraw__ in MetaMask to approve the transaction
+
 
 ## boostrTruffle migration
 ```bash
