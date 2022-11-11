@@ -1,6 +1,8 @@
 # boostr
 This app allows you to create and fund projects (called Boostrs). Creators of projects can also add spending requests to the project in order to reelase funds. If a majority of funders approved the request and there are sufficient funds in the Boostr account the Boostr creator can implement the payment to the vendor in exchange for services or goods. In order to be granted voting rights on requests a funder needs to stake a minimum amount that is defined at time of the Boostr project creation.
 
+Truffle migration does not yet support factory pattern (https://github.com/trufflesuite/truffle/issues/237) therefore the project has compile and deploy scripts.
+
 ## Details
 ### Design
 This project uses a factory design pattern (https://ethereumdev.io/manage-several-contracts-with-factories/).
